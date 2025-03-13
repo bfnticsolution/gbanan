@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achat de Forfait</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #002060, #004080); /* Bleu foncé */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    margin: 0;
+}
+
+.form_main {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff; /* Blanc */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.heading {
+    font-size: 2em;
+    color: #FFD700; /* Jaune */
+    font-weight: 700;
+    margin-bottom: 20px;
+    z-index: 2;
+    position: relative;
+}
+
+.inputContainer {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    z-index: 2;
+}
+
+.inputField {
+    width: 100%;
+    height: 40px;
+    padding-left: 10px;
+    border: 2px solid #6b7280;
+    border-radius: 10px;
+    font-size: 1.1em;
+    color: #002060; /* Bleu foncé */
+    background: transparent;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #004080; /* Bleu foncé */
+}
+
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    background: #002060; /* Bleu foncé */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-primary:hover {
+    background: #004080; /* Bleu foncé */
+}
+
+.btn-secondary {
+    width: 100%;
+    height: 50px;
+    background: #FFD700; /* Jaune */
+    border: none;
+    border-radius: 10px;
+    color: #002060; /* Bleu foncé */
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-secondary:hover {
+    background: #FFC107; /* Jaune clair */
+}
+
+    </style>
+</head>
+<body>
+    <div class="form_main">
+        <div class="heading">Achat de Forfait</div>
+        <div class="inputContainer">
+            <label for="operator">Choisissez l'opérateur :</label>
+            <select id="operator" class="inputField">
+                <option value="">Sélectionnez un opérateur</option>
+                <option value="orange">Orange</option>
+                <option value="moov">Moov</option>
+                <option value="telecel">Telecel</option>
+            </select>
+        </div>
+        <div class="inputContainer">
+            <label for="package">Choisissez le forfait :</label>
+            <select id="package" class="inputField">
+                <option value="">Sélectionnez un forfait</option>
+            </select>
+        </div>
+        <div class="inputContainer">
+            <label for="destinationNumber">Numéro destinataire :</label>
+            <input type="text" id="destinationNumber" class="inputField" placeholder="Entrez le numéro">
+        </div>
+        <div class="inputContainer">
+            <label for="wariPayAccount">Numéro de compte WariPay :</label>
+            <input type="text" id="wariPayAccount" class="inputField" placeholder="Entrez le numéro de compte">
+        </div>
+        <button class="btn-primary" onclick="submitForm()">Acheter</button>
+        <button class="btn-secondary" onclick="goToHome()">Retour à l'accueil</button>
+    </div>
+
+    <script>
+      const packages = {
+        orange: [
+            "1 Go à 1050 F",
+            "2 Go à 2000 F",
+            "5 Go à 4500 F"
+        ],
+        moov: [
+            "1 Go à 1100 F",
+            "2 Go à 2100 F",
+            "5 Go à 4600 F"
+        ],
+        telecel: [
+            "1 Go à 1000 F",
+            "2 Go à 1900 F",
+            "5 Go à 4400 F"
+        ]
+      };
+
+      document.getElementById('operator').addEventListener('change', function() {
+          const operator = this.value;
+          const packageSelect = document.getElementById('package');
+
+          // Clear previous options
+          packageSelect.innerHTML = '<option value="">Sélectionnez un forfait</option>';
+
+          if (operator && packages[operator]) {
+              packages[operator].forEach(pkg => {
+                  const option = document.createElement('option');
+                  option.value = pkg;
+                  option.textContent = pkg;
+                  packageSelect.appendChild(option);
+              });
+          }
+      });
+
+      function submitForm() {
+          const operator = document.getElementById('operator').value;
+          const pkg = document.getElementById('package').value;
+          const destinationNumber = document.getElementById('destinationNumber').value;
+          const wariPayAccount = document.getElementById('wariPayAccount').value;
+
+          if (operator && pkg && destinationNumber && wariPayAccount) {
+              const data = {
+                  operator,
+                  pkg,
+                  destinationNumber,
+                  wariPayAccount
+              };
+
+              // Send data to Google Sheets using Google Apps Script
+              fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(data)
+              })
+              .then(response => response.json())
+              .then(data => {
+                  alert('Forfait acheté avec succès !');
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Une erreur est survenue. Veuillez réessayer.');
+              });
+          } else {
+              alert('Veuillez remplir tous les champs.');
+          }
+      }
+
+      function goToHome() {
+          window.location.href = 'index.html'; // Remplacez par le chemin de votre page d'accueil
+      }
+    </script>
+</body>
+</html>

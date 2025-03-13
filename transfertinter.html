@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfert International</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #002060, #004080); /* Bleu foncé */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    margin: 0;
+}
+
+.form_main {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff; /* Blanc */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.form_main::before {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 300px;
+    background: #002060; /* Bleu foncé */
+    transform: rotate(45deg);
+    left: -180px;
+    bottom: 30px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.heading {
+    font-size: 2em;
+    color: #FFD700; /* Jaune */
+    font-weight: 700;
+    margin-bottom: 20px;
+    z-index: 2;
+    position: relative;
+}
+
+.inputContainer {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    z-index: 2;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #FFD700; /* Jaune */
+    z-index: 3;
+}
+
+.inputField {
+    width: 100%; /* Assure que le champ occupe toute la largeur disponible */
+    height: 40px; /* Hauteur fixe pour tous les champs de saisie */
+    padding-left: 35px;
+    border: 2px solid #6b7280;
+    border-radius: 10px;
+    font-size: 1.1em;
+    color: #002060; /* Bleu foncé */
+    background: transparent;
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+
+.inputField:focus {
+    outline: none;
+    border-color: #004080; /* Bleu foncé */
+}
+
+.inputField::placeholder {
+    color: #6b7280;
+}
+
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    background: #002060; /* Bleu foncé */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-primary:hover {
+    background: #004080; /* Bleu foncé */
+}
+
+.btn-home {
+    width: 100%;
+    height: 50px;
+    background: #FFD700; /* Jaune */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-home:hover {
+    background: #FFDF00; /* Jaune */
+}
+
+    </style>
+</head>
+<body>
+    <div class="form_main">
+        <h2 class="heading">Transfert International</h2>
+        <div class="inputContainer">
+            <i class="inputIcon fas fa-globe"></i>
+            <select id="destinationCountry" class="inputField" onchange="updateOperators()" required>
+                <option value="" disabled selected>Sélectionnez le pays de destination</option>
+                <option value="Burkina Faso">Burkina Faso</option>
+                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                <option value="Niger">Niger</option>
+                <option value="Mali">Mali</option>
+                <option value="Togo">Togo</option>
+            </select>
+        </div>
+        <div class="inputContainer" id="operatorContainer">
+            <i class="inputIcon fas fa-sim-card"></i>
+            <select id="destinationOperator" class="inputField" required>
+                <option value="" disabled selected>Sélectionnez l'opérateur</option>
+                <!-- Options will be dynamically populated based on the country -->
+            </select>
+        </div>
+        <div class="inputContainer">
+            <i class="inputIcon fas fa-phone"></i>
+            <input type="tel" id="recipientPhone" class="inputField" placeholder="Numéro destinataire" required>
+        </div>
+        <div class="inputContainer">
+            <i class="inputIcon fas fa-globe"></i>
+            <select id="countryCode" class="inputField" required>
+                <option value="" disabled selected>Code pays</option>
+                <option value="+226">Burkina Faso (+226)</option>
+                <option value="+225">Côte d'Ivoire (+225)</option>
+                <option value="+227">Niger (+227)</option>
+                <option value="+223">Mali (+223)</option>
+                <option value="+228">Togo (+228)</option>
+            </select>
+        </div>
+        <div class="inputContainer">
+            <i class="inputIcon fas fa-money-bill"></i>
+            <input type="number" id="transferAmount" class="inputField" placeholder="Montant du transfert" required oninput="calculateFee()">
+        </div>
+        <div class="inputContainer" id="waripayAccountContainer">
+            <i class="inputIcon fas fa-credit-card"></i>
+            <input type="text" id="waripayAccount" class="inputField" placeholder="Numéro de compte Waripay" required>
+        </div>
+        <div class="fee-display" id="feeDisplay">Frais: 0 XOF</div>
+        <button class="btn-primary" onclick="executeInternationalTransfer()">Confirmer le Transfert</button>
+        <button class="btn-home" onclick="goToHomePage()">Retour à l'Accueil</button>
+    </div>
+
+    <script>
+        let currentOperation = 'transfert_international';
+        let currentUser = { phone: '123456789', balance: 10000 }; // Exemple d'utilisateur
+
+        const operators = {
+            "Burkina Faso": ["Orange Money", "Moov Money", "Telecel Money"],
+            "Côte d'Ivoire": ["Orange Money", "Moov Money", "Wave"],
+            "Niger": ["Orange Money", "Moov Money", "Telecel Money"],
+            "Mali": ["Orange Money", "Sank Money"],
+            "Togo": ["Flooz", "Moov Money"]
+        };
+
+        function updateOperators() {
+            const country = document.getElementById('destinationCountry').value;
+            const operatorSelect = document.getElementById('destinationOperator');
+            operatorSelect.innerHTML = '<option value="" disabled selected>Sélectionnez l\'opérateur</option>';
+
+            if (operators[country]) {
+                operators[country].forEach(operator => {
+                    const option = document.createElement('option');
+                    option.value = operator;
+                    option.textContent = operator;
+                    operatorSelect.appendChild(option);
+                });
+            }
+        }
+
+        function calculateFee() {
+            const amount = document.getElementById('transferAmount').value;
+            const fee = (amount * 0.035).toFixed(2); // Calculer 3,5% du montant
+            document.getElementById('feeDisplay').innerText = 'Frais: ' + fee + ' XOF';
+        }
+
+        function executeInternationalTransfer() {
+            const country = document.getElementById('destinationCountry').value;
+            const operator = document.getElementById('destinationOperator').value;
+            const recipientPhone = document.getElementById('recipientPhone').value;
+            const countryCode = document.getElementById('countryCode').value;
+            const transferAmount = document.getElementById('transferAmount').value;
+            const waripayAccount = document.getElementById('waripayAccount').value;
+
+            const fee = (transferAmount * 0.035).toFixed(2); // Calculer 3,5% du montant
+            const totalAmount = parseFloat(transferAmount) + parseFloat(fee);
+
+            if (totalAmount > currentUser.balance) {
+                alert('Solde insuffisant pour effectuer ce transfert.');
+                return;
+            }
+
+            const operationData = {
+                phone: currentUser.phone,
+                destinationCountry: country,
+                destinationOperator: operator,
+                recipientPhone: recipientPhone,
+                countryCode: countryCode,
+                operationType: currentOperation,
+                waripayAccount: waripayAccount,
+                amount: totalAmount,
+            };
+
+            // Envoyer les données à l'API Google Sheets
+            fetch('YOUR_WEB_APP_URL_HERE', { // Remplacez par l'URL de votre application web
+                method: 'POST',
+                body: new URLSearchParams(operationData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    currentUser.balance -= totalAmount;
+                    alert('Transfert international réussi! Nouveau solde: ' + currentUser.balance.toFixed(2) + ' XOF');
+                } else {
+                    alert('Erreur lors du transfert international.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'opération.');
+            });
+        }
+
+        function goToHomePage() {
+            window.location.href = 'accueil.html'; // Remplacez par le chemin de votre page d'accueil
+        }
+    </script>
+</body>
+</html>

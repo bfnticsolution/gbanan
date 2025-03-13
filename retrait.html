@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrait</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1436a5, #1436a5); /* Bleu foncé */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    margin: 0;
+}
+
+.form_main {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff; /* Blanc */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.form_main::before {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 300px;
+    background: #1436a5; /* Bleu foncé */
+    transform: rotate(45deg);
+    left: -180px;
+    bottom: 30px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.heading {
+    font-size: 2em;
+    color: #f39c12; /* Jaune */
+    font-weight: 700;
+    margin-bottom: 20px;
+    z-index: 2;
+    position: relative;
+}
+
+.inputContainer {
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    z-index: 2;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f39c12; /* Jaune */
+    z-index: 3;
+}
+
+.inputField {
+    width: 100%; /* Assure que le champ occupe toute la largeur disponible */
+    height: 40px; /* Hauteur fixe pour tous les champs de saisie */
+    padding-left: 35px;
+    border: 2px solid #6b7280;
+    border-radius: 10px;
+    font-size: 1.1em;
+    color: #1436a5; /* Bleu foncé */
+    background: transparent;
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #1436a5; /* Bleu foncé */
+}
+
+.inputField::placeholder {
+    color: #6b7280;
+}
+
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    background: #1436a5; /* Bleu foncé */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-primary:hover {
+    background: #1436a5; /* Bleu foncé */
+}
+
+.btn-home {
+    width: 100%;
+    height: 50px;
+    background: #f39c12; /* Jaune */
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-home:hover {
+    background: #260582; /* Jaune */
+}
+
+    </style>
+</head>
+<body>
+    <div class="form_main">
+        <h2 class="heading">Retrait</h2>
+        <div class="inputContainer" id="operatorContainer">
+            <i class="inputIcon fas fa-sim-card"></i>
+            <select id="operator" class="inputField" required>
+                <option value="" disabled selected>Sélectionnez un opérateur</option>
+                <option value="Orange Money">Orange Money</option>
+                <option value="Moov Money">Moov Money</option>
+                <option value="Telecel Money">Telecel Money</option>
+            </select>
+        </div>
+        <div class="inputContainer" id="retraitAmountContainer">
+            <i class="inputIcon fas fa-money-bill"></i>
+            <input type="number" id="retraitAmount" class="inputField" placeholder="Montant du retrait" required oninput="calculateFee()">
+        </div>
+        <div class="inputContainer" id="retraitPhoneContainer">
+            <i class="inputIcon fas fa-phone"></i>
+            <input type="tel" id="retraitPhone" class="inputField" placeholder="Numéro destinataire" required>
+        </div>
+        <div class="inputContainer" id="waripayAccountContainer">
+            <i class="inputIcon fas fa-credit-card"></i>
+            <input type="text" id="waripayAccount" class="inputField" placeholder="Numéro de compte Waripay" required>
+        </div>
+        <div class="fee-display" id="feeDisplay">Frais: 0 XOF</div>
+        <button class="btn-primary" onclick="executeRetrait()">Confirmer le Retrait</button>
+        <button class="btn-home" onclick="goToHomePage()">Retour à l'Accueil</button>
+    </div>
+
+    <script>
+        let currentOperation = 'retrait';
+        let currentUser = { phone: '123456789', balance: 10000 }; // Exemple d'utilisateur
+
+        function calculateFee() {
+            let amount = document.getElementById('retraitAmount').value;
+            let fee = (amount * 0.02).toFixed(2);
+            document.getElementById('feeDisplay').innerText = 'Frais: ' + fee + ' XOF';
+        }
+
+        function executeRetrait() {
+            let amount = document.getElementById('retraitAmount').value;
+            let recipientPhone = document.getElementById('retraitPhone').value;
+            let operator = document.getElementById('operator').value;
+            let waripayAccount = document.getElementById('waripayAccount').value;
+
+            if (recipientPhone === currentUser.phone) {
+                alert('Vous ne pouvez pas effectuer un retrait vers votre propre numéro.');
+                return;
+            }
+
+            const operationData = {
+                phone: currentUser.phone,
+                amount: parseFloat(amount),
+                operationType: currentOperation,
+                recipientPhone: recipientPhone,
+                operator: operator,
+                waripayAccount: waripayAccount,
+            };
+
+            // Envoyer les données à l'API Google Sheets
+            fetch('YOUR_WEB_APP_URL_HERE', { // Remplacez par l'URL de votre application web
+                method: 'POST',
+                body: new URLSearchParams(operationData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    currentUser.balance -= amount;
+                    alert('Retrait réussi! Nouveau solde: ' + currentUser.balance.toFixed(2) + ' XOF');
+                } else {
+                    alert('Erreur lors du retrait.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue lors de l\'opération.');
+            });
+        }
+
+        function goToHomePage() {
+            window.location.href = 'accueil.html'; // Remplacez par le chemin de votre page d'accueil
+        }
+    </script>
+</body>
+</html>
