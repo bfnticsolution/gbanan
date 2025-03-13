@@ -3,313 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCode WARI</title>
+    <title>WARIPAY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-    /* Reset CSS */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1436a5, #1e3a8a);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        color: #333;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1436a5, #1e3a8a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
 
-    .form_main {
-        width: 100%;
-        max-width: 400px;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
+        .form_main {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .form_main::before {
-        content: "";
-        position: absolute;
-        width: 200px;
-        height: 300px;
-        background: #1436a5;
-        transform: rotate(45deg);
-        left: -180px;
-        bottom: 30px;
-        border-radius: 30px;
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1;
-    }
+        .form_main::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            background: #1436a5;
+            transform: rotate(45deg);
+            left: -180px;
+            bottom: 30px;
+            border-radius: 30px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
 
-    .heading {
-        font-size: 2em;
-        color: #f39c12; /* Jaune du logo */
-        font-weight: 700;
-        margin-bottom: 20px;
-        z-index: 2;
-        position: relative;
-    }
+        .heading {
+            font-size: 2em;
+            color: #f39c12; /* Jaune du logo */
+            font-weight: 700;
+            margin-bottom: 20px;
+            z-index: 2;
+            position: relative;
+        }
 
-    .heading1 {
-        font-size: 1.5em;
-        color: #f8f8f8;
-        font-weight: 700;
-        margin-bottom: 10px;
-        z-index: 2;
-        position: relative;
-    }
+        .heading1 {
+            font-size: 1.5em;
+            color: #f8f8f8;
+            font-weight: 700;
+            margin-bottom: 10px;
+            z-index: 2;
+            position: relative;
+        }
 
-    .inputContainer {
-        width: 100%;
-        position: relative;
-        margin: 15px 0;
-        z-index: 2;
-    }
+        .inputContainer {
+            width: 100%;
+            position: relative;
+            margin: 15px 0;
+            z-index: 2;
+        }
 
-    .inputIcon {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #f39c12; /* Jaune du logo */
-        z-index: 3;
-    }
+        .inputIcon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #f39c12; /* Jaune du logo */
+            z-index: 3;
+        }
 
-    .inputField {
-        width: 100%;
-        height: 40px;
-        padding-left: 35px;
-        border: 2px solid #6b7280;
-        border-radius: 10px;
-        font-size: 1.1em;
-        color: #f39c12; /* Jaune du logo */
-        background: transparent;
-        transition: border-color 0.3s;
-    }
+        .inputField {
+            width: 100%;
+            height: 40px;
+            padding-left: 35px;
+            border: 2px solid #6b7280;
+            border-radius: 10px;
+            font-size: 1.1em;
+            color: #f39c12; /* Jaune du logo */
+            background: transparent;
+            transition: border-color 0.3s;
+        }
 
-    .inputField:focus {
-        outline: none;
-        border-color: #1436a5; /* Bleu du logo */
-    }
+        .inputField:focus {
+            outline: none;
+            border-color: #1436a5; /* Bleu du logo */
+        }
 
-    .inputField::placeholder {
-        color: #6b7280;
-    }
+        .inputField::placeholder {
+            color: #6b7280;
+        }
 
-    .btn-primary {
-        width: 100%;
-        height: 50px;
-        background: #1436a5; /* Bleu du logo */
-        border: none;
-        border-radius: 10px;
-        color: white;
-        font-size: 1em;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        margin: 20px 0;
-        z-index: 2;
-        position: relative;
-    }
+        .btn-primary, .menubtn-primary {
+            width: 100%;
+            height: 50px;
+            background: #1436a5; /* Bleu du logo */
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 20px 0;
+            z-index: 2;
+            position: relative;
+        }
 
-    .menubtn-primary {
-        width: 100%;
-        height: 70px;
-        background: #1436a5; /* Bleu du logo */
-        border: none;
-        border-radius: 10px;
-        color: white;
-        font-size: 1em;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        margin: 20px 0;
-        z-index: 2;
-        position: relative;
-    }
+        .menubtn-primary {
+            height: 70px;
+        }
 
-    .btn-primary:hover {
-        background: #1e3a8a; /* Bleu plus foncé du logo */
-    }
+        .btn-primary:hover, .menubtn-primary:hover {
+            background: #1e3a8a; /* Bleu plus foncé du logo */
+        }
 
-    .hidden {
-        display: none;
-    }
+        .hidden {
+            display: none;
+        }
 
-    .user-info-balance {
-        background: #f39c12; /* Jaune du logo */
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        color: white;
-        align-items: flex-start;
-        font-weight: 500;
-    }
+        .user-info-balance {
+            background: #f39c12; /* Jaune du logo */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: white;
+            align-items: flex-start;
+            font-weight: 500;
+        }
 
-    #balanceAmount {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+        #balanceAmount {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    #toggleBalanceIcon {
-        cursor: pointer;
-        color: #28a745;
-        transition: color 0.3s;
-    }
+        #toggleBalanceIcon {
+            cursor: pointer;
+            color: #28a745;
+            transition: color 0.3s;
+        }
 
-    #toggleBalanceIcon:hover {
-        color: #218838;
-    }
+        #toggleBalanceIcon:hover {
+            color: #218838;
+        }
 
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    .modal-content {
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        max-width: 400px;
-        width: 90%;
-        animation: fadeIn 0.3s;
-    }
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 0.3s;
+        }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .modal-icon {
-        font-size: 2em;
-        margin-bottom: 10px;
-    }
+        .modal-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
 
-    .modal-icon.success {
-        color: #28a745;
-    }
+        .modal-icon.success {
+            color: #28a745;
+        }
 
-    .modal-icon.error {
-        color: #dc3545;
-    }
+        .modal-icon.error {
+            color: #dc3545;
+        }
 
-    .modal-button {
-        margin-top: 20px;
-        padding: 10px 50px;
-        background: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+        .modal-button {
+            margin-top: 20px;
+            padding: 10px 50px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .modal-button:hover {
-        background: #218838;
-    }
+        .modal-button:hover {
+            background: #218838;
+        }
 
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 24px;
-        cursor: pointer;
-        color: #aaa;
-        transition: color 0.3s;
-    }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.3s;
+        }
 
-    .close:hover {
-        color: #333;
-    }
+        .close:hover {
+            color: #333;
+        }
 
-    .loader {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        animation: spin 1s linear infinite;
-    }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    .operation-buttons {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
+        .operation-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
 
-    .operation-buttons button {
-        width: 100%;
-        padding: 15px;
-        font-size: 1em;
-    }
+        .operation-buttons button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1em;
+        }
 
-    /* Loader avec icône PNG */
-    .loader-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+        .loader-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-    /* Animation de la balle tournante */
-    .loader {
-        width: 50px;
-        height: 50px;
-        border: 6px solid rgba(255, 255, 255, 0.3);
-        border-top-color: white;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    .logo {
-        display: block;
-        margin: 0 auto 20px; /* Centré et espace en dessous */
-        width: 100px; /* Ajustez la taille selon vos besoins */
-    }
-    
-</style>
-
+        .logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
-    
     <div class="form_main">
         <!-- Section de connexion -->
         <div id="login-section">
-            <!-- Ajout du logo -->
             <img src="https://www2.0zz0.com/2025/03/13/18/485189406.png" alt="Waripay Logo" class="logo">
             <h2 class="heading">Connexion</h2>
             <form id="login-form">
@@ -326,6 +304,7 @@
             <p id="login-message"></p>
             <p>Pas de compte ? <a href="#" onclick="showSignupForm()">Créer un Compte WariPay</a></p>
         </div>
+
         <!-- Section d'inscription -->
         <div id="register-section" class="hidden">
             <img src="https://www2.0zz0.com/2025/03/13/18/485189406.png" alt="Waripay Logo" class="logo">
@@ -351,12 +330,8 @@
 
         <!-- Section Gestion de Compte -->
         <div id="account-section" class="hidden">
-           
-
-            <!-- Carte combinée pour les informations de l'utilisateur et le solde -->
             <div class="user-info-balance">
                 <p class="heading1">Mon Compte</p>
-                
                 <div class="user-info">
                     <p><strong>Nom :</strong> <span id="account-name"></span></p>
                     <p><strong>Téléphone :</strong> <span id="account-phone"></span></p>
@@ -369,22 +344,21 @@
                     </p>
                 </div>
             </div>
-
             <h3>Effectuer une opération</h3>
             <div id="operation-buttons" class="operation-buttons">
-                <button class="menubtn-primary" onclick="window.location.href='go:depot'"> 
+                <button class="menubtn-primary" onclick="window.location.href='depot.html'">
                     <i class="fas fa-plus-circle"></i> Dépôt
                 </button>
                 <button class="menubtn-primary" onclick="openOperationModal('transfert')"><i class="fas fa-exchange-alt"></i> Transfert</button>
-                <button class="menubtn-primary" onclick="window.location.href='go:wpretrait'"><i class="fas fa-minus-circle"></i> Retrait</button>
-                <button class="menubtn-primary" onclick="window.location.href='go:wpunite'"><i class="fas fa-mobile-alt"></i> Unité</button>
-                <button class="menubtn-primary" onclick="window.location.href='go:wpinternet'"><i class="fas fa-sim-card"></i> Internet</button>
-                <button class="menubtn-primary" onclick="window.location.href='go:transfertinter'"><i class="fas fa-globe-americas"></i> Transfert International</button>
-                <button class="menubtn-primary" onclick="window.location.href='go:wptv'"><i class="fas fa-tv"></i> TV</button>
-                <button class="menubtn-primary" onclick="window.location.href='go:wpfacture'">
+                <button class="menubtn-primary" onclick="window.location.href='retrait.html'"><i class="fas fa-minus-circle"></i> Retrait</button>
+                <button class="menubtn-primary" onclick="window.location.href='unite.html'"><i class="fas fa-mobile-alt"></i> Unité</button>
+                <button class="menubtn-primary" onclick="window.location.href='forfait.html'"><i class="fas fa-sim-card"></i> Internet</button>
+                <button class="menubtn-primary" onclick="window.location.href='transfertinter.html'"><i class="fas fa-globe-americas"></i> Transfert International</button>
+                <button class="menubtn-primary" onclick="window.location.href='tv.html'"><i class="fas fa-tv"></i> TV</button>
+                <button class="menubtn-primary" onclick="window.location.href='#'">
                     <i class="fas fa-file-invoice"></i> Facture
                 </button>
-                <button class="menubtn-primary" onclick="window.location.href='go:wp1xbet'">
+                <button class="menubtn-primary" onclick="window.location.href='1xbet.html'">
                     <i class="fas fa-ticket-alt"></i> Dépôt 1XBET
                 </button>
             </div>
@@ -445,21 +419,20 @@
         </div>
     </div>
 
-  
-   <!-- Loader avec animation -->
-   <div id="loaderModal" class="loader-modal">
-    <div class="loader"></div>
-</div>
-</div>
+    <!-- Loader avec animation -->
+    <div id="loaderModal" class="loader-modal">
+        <div class="loader"></div>
+    </div>
+
     <script>
-     // Simule un chargement et masque le loader après 3 secondes
-     setTimeout(() => {
+        // Simule un chargement et masque le loader après 3 secondes
+        setTimeout(() => {
             document.getElementById("loaderModal").style.display = "none";
         }, 3000);
-        
-    let currentOperation = null;
+
+        let currentOperation = null;
         let currentUser = null;
-        
+
         // Fonction pour ouvrir le modal d'opération
         function openOperationModal(operationType) {
             currentOperation = operationType;
@@ -468,12 +441,12 @@
                 (operationType === 'transfert' || operationType === 'transfert_national' || operationType === 'transfert_international') ? 'block' : 'none';
             document.getElementById('operationModal').style.display = 'block';
         }
-        
+
         // Fonction pour exécuter l'opération
         function executeOperation() {
             const amount = document.getElementById('amount').value;
             const recipientPhone = document.getElementById('recipientPhone').value;
-        
+
             const operationData = {
                 action: 'operation',
                 phone: currentUser.phone,
@@ -481,7 +454,7 @@
                 operationType: currentOperation,
                 recipientPhone: recipientPhone || null
             };
-        
+
             showLoader();
             fetch('https://script.google.com/macros/s/AKfycbx1XNzVxhVUa81Sdch5SFBS0-WC6UmZRJSGjDXNt6w876pIv5P8W1DLBZdCVt3t_3nh/exec', {
                 method: 'POST',
@@ -500,40 +473,40 @@
                 }
             });
         }
-        
+
         // Fonction pour fermer un modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
-        
+
         // Fonction pour afficher le loader
         function showLoader() {
             document.getElementById('loaderModal').style.display = 'flex';
         }
-        
+
         // Fonction pour masquer le loader
         function hideLoader() {
             document.getElementById('loaderModal').style.display = 'none';
         }
-        
+
         // Fonction pour afficher un message modal
         function showModalMessage(message, icon = '🔔') {
             document.getElementById('modal-message').innerHTML = `<div class="icon">${icon}</div>${message}`;
             document.getElementById('messageModal').style.display = 'block';
         }
-        
+
         // Gestion du formulaire d'opération
         document.getElementById('operationForm').addEventListener('submit', function(event) {
             event.preventDefault();
             executeOperation();
         });
-        
+
         // Gestion de la connexion
         document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
-        
+
             showLoader();
             fetch(`https://script.google.com/macros/s/AKfycbx1XNzVxhVUa81Sdch5SFBS0-WC6UmZRJSGjDXNt6w876pIv5P8W1DLBZdCVt3t_3nh/exec?action=login&phone=${phone}&password=${password}`)
             .then(response => response.json())
@@ -553,7 +526,7 @@
                 }
             });
         });
-        
+
         // Gestion de l'inscription
         document.getElementById('register-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -566,7 +539,7 @@
                 name: name,
                 password: password
             };
-        
+
             showLoader();
             fetch('https://script.google.com/macros/s/AKfycbx1XNzVxhVUa81Sdch5SFBS0-WC6UmZRJSGjDXNt6w876pIv5P8W1DLBZdCVt3t_3nh/exec', {
                 method: 'POST',
@@ -584,7 +557,7 @@
                 }
             });
         });
-        
+
         // Charger l'historique des transactions
         function loadHistory(phone) {
             fetch(`https://script.google.com/macros/s/AKfycbx1XNzVxhVUa81Sdch5SFBS0-WC6UmZRJSGjDXNt6w876pIv5P8W1DLBZdCVt3t_3nh/exec?action=getHistory&phone=${phone}`)
@@ -601,7 +574,7 @@
                 }
             });
         }
-        
+
         // Afficher l'historique des transactions
         document.getElementById('show-history-btn').addEventListener('click', function() {
             const phone = document.getElementById('phone').value;
@@ -620,12 +593,12 @@
                 }
             });
         });
-        
+
         // Basculer la visibilité du solde
         function toggleBalanceVisibility() {
             const balanceText = document.getElementById('balanceText');
             const toggleBalanceIcon = document.getElementById('toggleBalanceIcon');
-        
+
             if (balanceText.textContent === '******* F') {
                 balanceText.textContent = `${currentUser.balance.toFixed(2)} XOF`;
                 toggleBalanceIcon.classList.remove('fa-eye');
@@ -636,7 +609,7 @@
                 toggleBalanceIcon.classList.add('fa-eye');
             }
         }
-        
+
         // Déconnexion
         function logoutUser() {
             localStorage.removeItem('userPhone');
@@ -646,7 +619,6 @@
             document.getElementById('phone-container').classList.remove('hidden');
         }
 
-        
         // Functions to display sections
         function showLoginForm() {
             document.getElementById('login-section').classList.remove('hidden');
@@ -664,23 +636,15 @@
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('register-section').classList.add('hidden');
             document.getElementById('account-section').classList.remove('hidden');
-        } 
-
-        // Logout function
-        function logoutUser() {
-            localStorage.removeItem('userPhone');
-            currentUser = null;
-            showLoginForm();
-            document.getElementById('phone-container').classList.remove('hidden');
         }
-        
+
         // Fermer les modals en cliquant à l'extérieur
         window.addEventListener('click', function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
             }
-        });
-        
+        }); 
+
         // Fermer les modals avec le bouton de fermeture
         document.querySelectorAll('.close').forEach(function(closeButton) {
             closeButton.addEventListener('click', function() {
